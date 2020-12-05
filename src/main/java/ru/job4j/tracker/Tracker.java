@@ -42,11 +42,12 @@ public class Tracker {
 
     public boolean replace(int id, Item item) {
         int index = indexOf(id);
-        if (index != -1) {
+        boolean flag = index != -1;
+        if (flag) {
             item.setId(id);
             items[index] = item;
         }
-        return index != -1;
+        return flag;
     }
 
     private int indexOf(int id) {
@@ -62,11 +63,12 @@ public class Tracker {
 
     public boolean delete(int id) {
         int index = indexOf(id);
-        if (index != -1) {
+        boolean flag = index != -1;
+        if (flag) {
             System.arraycopy(items, index + 1, items, index, size - index);
             items[size - 1] = null;
             size--;
         }
-        return index != -1;
+        return flag;
     }
 }
