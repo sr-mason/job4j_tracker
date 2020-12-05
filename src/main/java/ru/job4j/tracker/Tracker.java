@@ -11,7 +11,7 @@ public class Tracker {
         return item;
     }
 
-    public Item[] findAll(Item[] items) {
+    public Item[] findAll() {
         Item[] a = new Item[size];
         int countA = 0;
         for (Item item : items) {
