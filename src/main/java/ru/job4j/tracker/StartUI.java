@@ -1,6 +1,5 @@
 package ru.job4j.tracker;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class StartUI {
@@ -13,18 +12,16 @@ public class StartUI {
             switch (select) {
                 case 0 -> {
                     System.out.println("=== Create a new Item ====");
-                    System.out.print("id: ");
-                    int id = Integer.parseInt(scanner.nextLine());
                     System.out.print("Enter name: ");
                     String name = scanner.nextLine();
-                    Item item = new Item(id, name);
+                    Item item = new Item(name);
                     tracker.add(item);
                 }
                 case 1 -> {
                     System.out.println("=== Show all items ====");
                     Item[] items = tracker.findAll();
                     for (Item itm: items) {
-                        System.out.println(itm.toString());
+                        System.out.println(itm);
                     }
                 }
                 case 2 -> {
@@ -54,14 +51,27 @@ public class StartUI {
                     System.out.println("=== Find item by Id. ===");
                     System.out.println("Enter id find item: ");
                     int idFind = Integer.parseInt(scanner.nextLine());
-                    System.out.println(tracker.findById(idFind));
+
+                    Item Find = tracker.findById(idFind);
+                    if (Find != null) {
+                        System.out.println(Find);
+                    } else {
+                        System.out.println("item null, try again");
+                    }
+
                 }
                 case 5 -> {
                     System.out.println("=== Find items by name ===");
                     System.out.println("Enter name find item: ");
                     String nameFind = scanner.nextLine();
-                    System.out.println(Arrays.toString(tracker.findByName(nameFind)));
-                    run = true;
+                    Item[] item = tracker.findByName(nameFind);
+                    if (item.length > 0) {
+                        for (Item value : item) {
+                            System.out.println(value.getId() + "  " + value.getName());
+                        }
+                    } else {
+                        System.out.println("Заявки с таким именем не найдены");
+                    }
                 }
                 case 6 -> run = false;
                 default -> System.out.print("Select number on 0 to 6");
