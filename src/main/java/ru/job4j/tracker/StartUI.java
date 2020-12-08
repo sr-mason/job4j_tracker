@@ -96,7 +96,8 @@ public class StartUI {
                 + "%n 3. Delete item"
                 + "%n 4. Find item by Id"
                 + "%n 5. Find items by name"
-                + "%n 6. Exit Program %n"
+                + "%n 6. Update item"
+                + "%n 7. Exit Program %n"
         );
     }
 
