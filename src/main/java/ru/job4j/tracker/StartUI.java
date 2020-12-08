@@ -60,6 +60,15 @@ public class StartUI {
         }
     }
 
+    public static void replaceItem(Input input, Tracker tracker) {
+        System.out.println(" === Update item ====");
+        int id = Integer.parseInt(input.askStr("Enter id:"));
+        String name = input.askStr("Enter a new name of item: ");
+        Item item = new Item(name);
+        item.setId(id);
+        tracker.replace(id, item);
+    }
+
     public void init(Input input, Tracker tracker) {
         boolean run = true;
         while (run) {
@@ -72,7 +81,8 @@ public class StartUI {
                 case 3 -> StartUI.Delete(input, tracker);
                 case 4 -> StartUI.FindId(input, tracker);
                 case 5 -> StartUI.FindName(input, tracker);
-                case 6 -> run = false;
+                case 6 -> StartUI.replaceItem(input, tracker);
+                case 7 -> run = false;
                 default -> System.out.print("Select number on 0 to 6");
             }
         }
@@ -82,7 +92,6 @@ public class StartUI {
         System.out.printf("%n Menu."
                 +  "%n 0. Add new Item"
                 + "%n 1. Show all items"
-                + "%n 2. Edit item"
                 + "%n 2. Edit item"
                 + "%n 3. Delete item"
                 + "%n 4. Find item by Id"
