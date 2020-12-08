@@ -17,14 +17,14 @@ public class StartUITest {
     }
 
     @Test
-    public void whenReplaceItem() {
+    public void whenEditItem() {
         Tracker tracker = new Tracker();
         Item item = new Item("new item");
         tracker.add(item);
         String[] answers = {String.valueOf(item.getId()), "replaced item"};
-        StartUI.replaceItem(new StubInput(answers), tracker);
-        Item replaced = tracker.findById(item.getId());
-        assertThat(replaced.getName(), is("replaced item"));
+        StartUI.edit(new StubInput(answers), tracker);
+        Item edit = tracker.findById(item.getId());
+        assertThat(edit.getName(), is("replaced item"));
     }
 
     @Test
@@ -33,7 +33,7 @@ public class StartUITest {
         Item item = new Item("new item");
         tracker.add(item);
         String[] answers = {String.valueOf(item.getId())};
-        StartUI.Delete(new StubInput(answers), tracker);
+        StartUI.delete(new StubInput(answers), tracker);
         Item delete = tracker.findById(item.getId());
         assertNull(delete);
     }
