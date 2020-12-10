@@ -14,7 +14,8 @@ public class StartUITest {
         Tracker tracker = new Tracker();
         UserAction[] actions = {new ExitAction(output)};
         new StartUI(output).init(in, tracker, actions);
-        assertThat(output.toString(), is("Menu." + System.lineSeparator() + "0. === Exit ====" + System.lineSeparator()));
+        assertThat(output.toString(), is("Menu." + System.lineSeparator()
+                + "0. === Exit ====" + System.lineSeparator()));
     }
 
     @Test
@@ -24,7 +25,8 @@ public class StartUITest {
         Input in = new StubInput(new String[] {"0", "Item name", "1"});
         UserAction[] actions = {new CreateAction(output), new ExitAction(output)};
         new StartUI(output).init(in, tracker, actions);
-        assertThat(tracker.findAll()[0].getName(), is("Item name"));
+        assertThat(output.toString(), is("Menu." + System.lineSeparator()
+                + "=== Create a new Item ====" + System.lineSeparator() ));
     }
 
     @Test
@@ -65,21 +67,45 @@ public class StartUITest {
     public void findNameAction() {
         Output output = new StubOutput();
         Tracker tracker = new Tracker();
-        Item item = tracker.add(new Item("item"));
-        Input in = new StubInput(new String[] {"0", String.valueOf(item.getName()), "1"});
-        UserAction[] actions = {new FindNameAction(output), new ExitAction(output)};
-        new StartUI(output).init(in, tracker, actions);
-        assertThat(tracker.findAll()[0].getName(), is("item"));
+        tracker.add(new Item("item"));
+        Input in = new StubInput(new String[] {"item"});
+        FindNameAction actions = new FindNameAction(output);
+        actions.execute(in, tracker);
+        assertThat(output.toString(), is("Item{id=1, name='item'}" + System.lineSeparator()));
+    }
+
+    @Test
+    public void findNoNameAction() {
+        Output output = new StubOutput();
+        Tracker tracker = new Tracker();
+        tracker.add(new Item("item"));
+        Input in = new StubInput(new String[] {"i"});
+        FindNameAction actions = new FindNameAction(output);
+        actions.execute(in, tracker);
+        assertThat(output.toString(), is("Заявки с таким именем не найдены" + System.lineSeparator()));
     }
 
     @Test
         public void whenFindIdAction() {
         Tracker tracker = new Tracker();
         Output output = new StubOutput();
-        Item item = tracker.add(new Item("Find item by id"));
-        Input in = new StubInput(new String[] {"0", String.valueOf(item.getId()), "1"});
-        UserAction[] actions = {new FindIdAction(output), new ExitAction(output)};
-        new StartUI(output).init(in, tracker, actions);
-        assertThat(tracker.findById(item.getId()), is(item));
+        tracker.add(new Item("Find 1s item by id"));
+        tracker.add(new Item("Find 2d item by id"));
+        Input in = new StubInput(new String[] {"2"});
+        FindIdAction find = new FindIdAction(output);
+        find.execute(in, tracker);
+        assertThat(output.toString(), is("Item{id=2, name='Find 2d item by id'}" + System.lineSeparator()));
+    }
+
+    @Test
+    public void whenNoFindIdAction() {
+        Tracker tracker = new Tracker();
+        Output output = new StubOutput();
+        tracker.add(new Item("Find 1s item by id"));
+        tracker.add(new Item("Find 2d item by id"));
+        Input in = new StubInput(new String[] {"3"});
+        FindIdAction find = new FindIdAction(output);
+        find.execute(in, tracker);
+        assertThat(output.toString(), is("item null, try again" + System.lineSeparator()));
     }
 }
