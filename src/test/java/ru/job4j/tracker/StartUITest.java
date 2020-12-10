@@ -66,22 +66,11 @@ public class StartUITest {
     public void findNameAction() {
         Output output = new StubOutput();
         Tracker tracker = new Tracker();
-        tracker.add(new Item("item"));
-        Input in = new StubInput(new String[] {"item"});
-        FindNameAction actions = new FindNameAction(output);
-        actions.execute(in, tracker);
-        assertThat(output.toString(), is("Item{id=1, name='item'}" + System.lineSeparator()));
-    }
-
-    @Test
-    public void findNoNameAction() {
-        Output output = new StubOutput();
-        Tracker tracker = new Tracker();
-        tracker.add(new Item("item"));
-        Input in = new StubInput(new String[] {"i"});
-        FindNameAction actions = new FindNameAction(output);
-        actions.execute(in, tracker);
-        assertThat(output.toString(), is("Заявки с таким именем не найдены" + System.lineSeparator()));
+        Item item = tracker.add(new Item("item"));
+        Input in = new StubInput(new String[] {"0", String.valueOf(item.getName()), "1"});
+        UserAction[] actions = {new FindNameAction(output), new ExitAction(output)};
+        new StartUI(output).init(in, tracker, actions);
+        assertThat(tracker.findAll()[0].getName(), is("item"));
     }
 
     @Test
