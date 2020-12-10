@@ -23,10 +23,9 @@ public class StartUITest {
         Tracker tracker = new Tracker();
         Output output = new StubOutput();
         Input in = new StubInput(new String[] {"0", "Item name", "1"});
-        UserAction[] actions = {new CreateAction(output), new ExitAction(output)};
-        new StartUI(output).init(in, tracker, actions);
-        assertThat(output.toString(), is("Menu." + System.lineSeparator()
-                + "=== Create a new Item ====" + System.lineSeparator() ));
+        CreateAction actions = new CreateAction(output);
+        actions.execute(in, tracker);
+        assertThat(output.toString(), is("=== Create a new Item ====" + System.lineSeparator() ));
     }
 
     @Test
