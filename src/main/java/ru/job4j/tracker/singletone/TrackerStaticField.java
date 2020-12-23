@@ -1,6 +1,5 @@
 package ru.job4j.tracker.singletone;
 
-import ru.job4j.tracker.Item;
 import ru.job4j.tracker.Tracker;
 
 public class TrackerStaticField {
@@ -14,10 +13,6 @@ public class TrackerStaticField {
             instance = new Tracker();
         }
         return instance;
-    }
-
-    public Item add(Item item) {
-        return instance.add(item);
     }
 
     public static void main(String[] args) {
