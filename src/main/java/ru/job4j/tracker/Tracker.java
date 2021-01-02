@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Tracker {
-    private final List<Item> items = new ArrayList<>(100);
+    private final List<Item> items = new ArrayList<>();
     private int ids = 1;
 
     public Item add(Item item) {
@@ -13,19 +13,13 @@ public class Tracker {
     }
 
     public List<Item> findAll() {
-        List<Item> a = new ArrayList<>();
-        for (Item item : items) {
-            if (item != null) {
-                a.add(item);
-            }
-        }
-        return a;
+        return items;
     }
 
     public List<Item> findByName(String key) {
         List<Item> a = new ArrayList<>();
         for (Item item : items) {
-            if (item.getName() != null && item.getName().equals(key)) {
+            if (item.getName().equals(key)) {
                 a.add(item);
             }
         }
@@ -38,15 +32,13 @@ public class Tracker {
     }
 
     public boolean replace(int id, Item item) {
-        boolean result = false;
-        for (Item i : items) {
-            if (i.getId() == id) {
-                items.set(items.indexOf(i), item);
-                item.setId(id);
-                result = true;
-            }
+        int index = indexOf(id);
+        boolean rsl = index != -1;
+        if (rsl) {
+            item.setId(id);
+            items.set(index, item);
         }
-        return result;
+        return rsl;
     }
 
     private int indexOf(int id) {
