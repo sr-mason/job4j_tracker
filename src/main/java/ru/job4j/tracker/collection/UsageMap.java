@@ -1,4 +1,5 @@
 package ru.job4j.tracker.collection;
+
 import java.util.HashMap;
 public class UsageMap {
     public static void main(String[] args) {
